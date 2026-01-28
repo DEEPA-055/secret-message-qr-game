@@ -2,8 +2,6 @@
 
 A clean, lightweight, and interactive web application that generates QR codes instantly in your browser. Designed with a focus on user experience, the interface automatically declutters itself to showcase your generated code.
 
-## 🚀 Live Demo
-**Try it here:** [https://deepa-055.github.io/secret-message-qr-game/](https://deepa-055.github.io/secret-message-qr-game/)
 
 ## ✨ Features
 * **Instant Generation:** Converts text or URLs into QR codes immediately.
