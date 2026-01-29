@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Spy Messenger</title>
+    <style>
+        /* SPY THEME STYLES */
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Classic spy font */
+            background-color: #2d3436; /* Dark background */
+            color: #dfe6e9; /* Light grey text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        /* Navigation Link */
+        .nav-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #fab1a0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .nav-link:hover { text-decoration: underline; }
+
+        .container {
+            background-color: #000000;
+            padding: 30px;
+            border: 2px solid #00cec9; /* Matrix Cyan border */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 206, 201, 0.5); /* Glowing effect */
+            text-align: center;
+            width: 320px;
+        }
+
+        h2 { 
+            color: #00cec9; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            margin-top: 0;
+        }
+
+        /* Input Fields */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #00cec9;
+            background: #111;
+            color: #00cec9;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        input::placeholder { color: #636e72; }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00cec9;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        button:hover { 
+            background-color: #81ecec; 
+            box-shadow: 0 0 10px #00cec9;
+        }
+
+        /* Divider Line */
+        .divider { 
+            border-top: 1px dashed #555; 
+            margin: 25px 0; 
+        }
+        
+        /* QR Code Box */
+        #qrcode {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            background: white; 
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 200px; /* Keeps layout stable */
+        }
+
+        /* Hidden Receiver Section */
+        .hidden { display: none; }
+
+        /* Decrypt Button Style */
+        .btn-decrypt {
+            background-color: #e17055; /* Orange/Red for unlocking */
+            color: white;
+        }
+        .btn-decrypt:hover { background-color: #fab1a0; box-shadow: 0 0 10px #e17055; }
+
+    </style>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+
+    <a href="index.html" class="nav-link">⬅ Back to Generator</a>
+
+    <div class="container">
+        <h2>🔒 Top Secret</h2>
+
+        <div id="sender-mode">
+            <input type="text" id="msg-input" placeholder="Type Secret Message..." />
+            <input type="password" id="pass-input" placeholder="Set a Password (Key)" />
+            <button onclick="encryptAndGenerate()">🔒 Encrypt & Create QR</button>
+        </div>
+
+        <div id="qrcode"></div>
+        <p id="status-msg" style="color: #fab1a0; font-size: 12px; margin-top: 10px;"></p>
+
+        <div class="divider"></div>
+
+        <h3 style="font-size: 14px; color: #74b9ff; cursor: pointer; text-decoration: underline;" onclick="toggleDecrypt()">
+            👇 Have a code to Decrypt?
+        </h3>
+        
+        <div id="receiver-mode" class="hidden">
+            <input type="text" id="cipher-input" placeholder="Paste Scanned Text Here" />
+            <input type="password" id="decrypt-pass" placeholder="Enter Password to Unlock" />
+            <button class="btn-decrypt" onclick="decryptMessage()">🔓 Unlock Message</button>
+            
+            <div id="final-message" style="margin-top: 15px; color: #00cec9; font-weight: bold; font-size: 18px; word-wrap: break-word;"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const qrContainer = document.getElementById("qrcode");
+
+        // --- FUNCTION 1: Encrypt Message & Make QR ---
+        function encryptAndGenerate() {
+            let message = document.getElementById("msg-input").value;
+            let password = document.getElementById("pass-input").value;
+
+            // Simple validation
+            if (!message || !password) {
+                alert("⚠️ MISSION FAILED: You need both a Message AND a Password!");
+                return;
+            }
+
+            // 1. Encrypt the text using AES
+            // The result looks like random gibberish (e.g., U2FsdGVkX1...)
+            let encrypted = CryptoJS.AES.encrypt(message, password).toString();
+
+            // 2. Clear any old QR code
+            qrContainer.innerHTML = "";
+
+            // 3. Generate new QR with the ENCRYPTED text
+            new QRCode(qrContainer, {
+                text: encrypted,
+                width: 200,
+                height: 200,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            // 4. Update UI
+            document.getElementById("status-msg").innerText = "✅ QR generated! Contains encrypted data only.";
+            
+            // Clear inputs for security (so no one sees what you typed)
+            document.getElementById("msg-input").value = "";
+            document.getElementById("pass-input").value = "";
+        }
+
+        // --- FUNCTION 2: Show/Hide Decrypt Section ---
+        function toggleDecrypt() {
+            let section = document.getElementById("receiver-mode");
+            if (section.style.display === "block") {
+                section.style.display = "none";
+            } else {
+                section.style.display = "block";
+            }
+        }
+
+        // --- FUNCTION 3: Unlock (Decrypt) Message ---
+        function decryptMessage() {
+            let cipherText = document.getElementById("cipher-input").value;
+            let password = document.getElementById("decrypt-pass").value;
+
+            if (!cipherText || !password) {
+                alert("Please enter the Code Text and the Password.");
+                return;
+            }
+
+            try {
+                // 1. Attempt to decrypt
+                let bytes = CryptoJS.AES.decrypt(cipherText, password);
+                let originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+                // 2. Check if it worked
+                if (originalText) {
+                    document.getElementById("final-message").innerHTML = "Message:<br>" + originalText;
+                } else {
+                    // If password is wrong, originalText will be empty
+                    alert("❌ ACCESS DENIED: Wrong Password!");
+                    document.getElementById("final-message").innerText = "";
+                }
+            } catch (e) {
+                alert("❌ ERROR: Invalid Code Format.");
+            }
+        }
+    </script>
+
+</body>
+</html>
