@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 3: Self-Destruct Protocol</title>
+    <style>
+        /* DANGER THEME STYLES (Red & Black) */
+        body {
+            font-family: 'Courier New', Courier, monospace; 
+            background-color: #111; /* Pitch black */
+            color: #dfe6e9; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .nav-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #fab1a0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        .nav-link:hover { opacity: 1; text-decoration: underline; }
+
+        .container {
+            background-color: #000000;
+            padding: 30px;
+            border: 2px solid #ff4757; /* DANGER RED Border */
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 71, 87, 0.3); 
+            text-align: center;
+            width: 320px;
+        }
+
+        h2 { 
+            color: #ff4757; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            margin-top: 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
+            background: #222;
+            color: #ff4757;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        button:hover { background-color: #ff6b81; box-shadow: 0 0 15px #ff4757; }
+
+        .divider { border-top: 1px dashed #444; margin: 25px 0; }
+        
+        #qrcode {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            background: white; 
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 200px;
+        }
+
+        .hidden { display: none; }
+        .toggle-link { font-size: 14px; color: #74b9ff; cursor: pointer; text-decoration: underline; }
+
+        .btn-decrypt { background-color: #0984e3; }
+        .btn-decrypt:hover { background-color: #74b9ff; box-shadow: 0 0 15px #0984e3; }
+
+        /* TIMER & MESSAGE DISPLAY */
+        #final-message {
+            margin-top: 15px;
+            color: #00cec9;
+            font-weight: bold;
+            font-size: 18px;
+            word-wrap: break-word;
+            padding: 10px;
+            border: 1px dashed #00cec9;
+            display: none;
+        }
+
+        #timer-display {
+            color: #ff4757;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 16px;
+            display: none;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0.5; } }
+        .status { font-size: 12px; margin-top: 10px; height: 15px; color: #ccc;}
+    </style>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+
+    <a href="index.html" class="nav-link">⬅ Back to Home</a>
+
+    <div class="container">
+        <h2>💣 Self-Destruct</h2>
+
+        <div id="sender-mode">
+            <input type="text" id="msg-input" placeholder="Type Secret Message..." />
+            <input type="password" id="pass-input" placeholder="Set Password" />
+            <button onclick="encryptAndGenerate()">🔒 Create Timer QR</button>
+            <div id="sender-status" class="status"></div>
+        </div>
+
+        <div id="qrcode"></div>
+
+        <div class="divider"></div>
+
+        <h3 class="toggle-link" onclick="toggleDecrypt()">👇 Received a Code? Decrypt Here</h3>
+        
+        <div id="receiver-mode" class="hidden">
+            <input type="text" id="cipher-input" placeholder="Paste Code Here" />
+            <input type="password" id="decrypt-pass" placeholder="Enter Password" />
+            <button class="btn-decrypt" onclick="decryptMessage()">🔓 Unlock Message</button>
+            
+            <div id="receiver-status" class="status"></div>
+
+            <div id="timer-display">⚠️ DESTROYING IN: <span id="countdown">0</span>s</div>
+            <div id="final-message"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const qrContainer = document.getElementById("qrcode");
+        let destructTimer;
+
+        function encryptAndGenerate() {
+            let message = document.getElementById("msg-input").value;
+            let password = document.getElementById("pass-input").value;
+            
+            if (!message || !password) {
+                alert("Please enter message and password!"); return;
+            }
+
+            let encrypted = CryptoJS.AES.encrypt(message, password).toString();
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, { text: encrypted, width: 200, height: 200 });
+            
+            document.getElementById("sender-status").innerText = "✅ QR Ready. Message will self-destruct.";
+            document.getElementById("msg-input").value = "";
+            document.getElementById("pass-input").value = "";
+        }
+
+        function toggleDecrypt() {
+            let section = document.getElementById("receiver-mode");
+            section.style.display = section.style.display === "block" ? "none" : "block";
+        }
+
+        function decryptMessage() {
+            let cipherText = document.getElementById("cipher-input").value;
+            let password = document.getElementById("decrypt-pass").value;
+            let msgBox = document.getElementById("final-message");
+            let timerBox = document.getElementById("timer-display");
+            let countSpan = document.getElementById("countdown");
+
+            clearInterval(destructTimer);
+            timerBox.style.display = "none";
+            msgBox.style.display = "none";
+
+            try {
+                let bytes = CryptoJS.AES.decrypt(cipherText, password);
+                let originalText = bytes.toString(CryptoJS.enc.Utf8);
+
+                if (originalText) {
+                    msgBox.innerText = originalText;
+                    msgBox.style.display = "block";
+                    msgBox.style.color = "#00cec9";
+                    msgBox.style.borderColor = "#00cec9";
+
+                    // SMART TIMER: 5s base + 1s per 5 chars
+                    let calculatedTime = 5 + Math.ceil(originalText.length / 5);
+                    
+                    timerBox.style.display = "block";
+                    countSpan.innerText = calculatedTime;
+
+                    destructTimer = setInterval(function() {
+                        calculatedTime--;
+                        countSpan.innerText = calculatedTime;
+                        if (calculatedTime <= 0) {
+                            clearInterval(destructTimer);
+                            msgBox.innerHTML = "💥 DESTROYED 💥";
+                            msgBox.style.color = "red";
+                            msgBox.style.borderColor = "red";
+                            timerBox.style.display = "none";
+                        }
+                    }, 1000); 
+                } else { alert("Wrong Password!"); }
+            } catch (e) { alert("Invalid Code"); }
+        }
+    </script>
+</body>
+</html>
