@@ -7,21 +7,25 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fff700;
+            background-color: #fff700; /* YOUR ORIGINAL YELLOW */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .container {
             background-color: white;
-            padding: 150px;
+            /* FIXED: Changed from 150px to 40px so content fits */
+            padding: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
-            width: 300px;
+            width: 100%;
+            max-width: 400px;
         }
 
         h2 {
@@ -31,33 +35,64 @@
 
         input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensures padding doesn't widen element */
+            box-sizing: border-box;
+            font-size: 16px;
         }
 
+        /* YOUR ORIGINAL BUTTON STYLE */
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #008080;
+            padding: 12px;
+            background-color: #008080; /* YOUR ORIGINAL TEAL */
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s;
+            font-weight: bold;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #006666; /* Slightly darker teal on hover */
         }
 
         #qrcode {
-            margin-top: 20px;
+            margin-top: 25px;
             display: flex;
             justify-content: center;
+            padding: 10px;
+        }
+
+        /* SPY SECTION (Keep exact spy colors) */
+        .spy-section {
+            margin-top: 30px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        .spy-text {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* SPY BUTTON (Dark Grey + Neon Teal) */
+        .spy-button {
+            text-decoration: none;
+            background-color: #2d3436; 
+            color: #00cec9;
+            padding: 15px 0; /* Make it full width like the other buttons */
+            width: 100%;     /* Full width */
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: monospace;
+            display: inline-block;
+            border: none;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -65,7 +100,7 @@
 <body>
 
     <div class="container">
-        <h2 style="color: #333;">QR Generator</h2>
+        <h2>QR Generator</h2>
 
         <div id="input-group">
             <input type="text" id="text-input" placeholder="Enter text or URL" />
@@ -74,45 +109,34 @@
 
         <div id="qrcode"></div>
 
-        <button id="reset-btn" onclick="resetApp()" style="display: none; background-color: #008080; margin-top: 15px;">
+        <button id="reset-btn" onclick="resetApp()" style="display: none; margin-top: 15px; background-color: #555;">
             Create New Code
         </button>
-    </div>
 
-    <div style="margin-top: 25px; border-top: 1px solid #ccc; padding-top: 15px;">
-    <p style="font-size: 14px; color: #555;">Want to send a Secret Message?</p>
-    <a href="spy.html" style="
-        text-decoration: none; 
-        background-color: #2d3436; 
-        color: #00cec9; 
-        padding: 10px 20px; 
-        border-radius: 5px; 
-        font-weight: bold; 
-        font-family: monospace;
-        display: inline-block;">
-        🕵️ Go to Spy Mode
-    </a>
-</div>
+        <div class="spy-section">
+            <p class="spy-text">Want to send a Secret Message?</p>
+            <a href="spy.html" class="spy-button">
+                🕵️ Go to Spy Mode
+            </a>
+        </div>
+    </div>
 
 
     <script>
         const qrContainer = document.getElementById("qrcode");
         const inputGroup = document.getElementById("input-group");
         const resetBtn = document.getElementById("reset-btn");
-        
+
         function generateQR() {
             let text = document.getElementById("text-input").value;
 
-            // Basic check
             if (text.trim() === "") {
                 alert("Please enter some text or a URL");
                 return;
             }
 
-            // 1. Clear previous QR
             qrContainer.innerHTML = "";
 
-            // 2. Generate the QR
             new QRCode(qrContainer, {
                 text: text,
                 width: 200,
@@ -122,24 +146,14 @@
                 correctLevel : QRCode.CorrectLevel.H
             });
 
-            // 3. HIDE the input tools
             inputGroup.style.display = "none";
-
-            // 4. SHOW the "Create New" button
             resetBtn.style.display = "block";
         }
 
         function resetApp() {
-            // 1. Clear the QR code
             qrContainer.innerHTML = "";
-            
-            // 2. Clear the text inside the input box
             document.getElementById("text-input").value = "";
-
-            // 3. SHOW the input tools again
             inputGroup.style.display = "block";
-
-            // 4. HIDE the reset button
             resetBtn.style.display = "none";
         }
     </script>
