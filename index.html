@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protocol Vanish: Home Base</title>
+    <title>QR Generator: Home Base</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* CHANGED: From Yellow to Dark Navy */
+            /* CHANGED: Font matches Level 4 (Hacker Style) */
+            font-family: 'Courier New', Courier, monospace;
+            /* Dark Navy Background */
             background-color: #1e272e; 
             display: flex;
             justify-content: center;
@@ -19,14 +20,14 @@
         }
 
         .container {
-            background-color: #ffffff; /* White card pops against dark background */
+            background-color: #ffffff; 
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Stronger shadow */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             text-align: center;
             width: 100%;
             max-width: 400px;
-            border-top: 5px solid #00d2d3; /* Cool accent line on top */
+            border-top: 5px solid #00d2d3; 
         }
 
         h2 {
@@ -34,7 +35,8 @@
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 22px;
+            font-size: 24px; /* Slightly larger for Courier font */
+            font-weight: bold;
         }
 
         input {
@@ -47,6 +49,7 @@
             font-size: 16px;
             background-color: #f1f2f6;
             transition: 0.3s;
+            font-family: 'Courier New', Courier, monospace; /* Input font match */
         }
         
         input:focus {
@@ -59,7 +62,6 @@
         button {
             width: 100%;
             padding: 14px;
-            /* CHANGED: Neon Teal */
             background-color: #00d2d3; 
             color: #2d3436;
             border: none;
@@ -69,6 +71,7 @@
             font-weight: bold;
             transition: transform 0.2s, background 0.3s;
             text-transform: uppercase;
+            font-family: 'Courier New', Courier, monospace; /* Button font match */
         }
 
         button:hover {
@@ -107,7 +110,7 @@
             width: 100%;
             border-radius: 6px;
             font-weight: bold;
-            font-family: monospace;
+            font-family: 'Courier New', Courier, monospace; /* Link font match */
             display: inline-block;
             transition: 0.3s;
             margin-bottom: 10px;
@@ -154,11 +157,11 @@
 <body>
 
     <div class="container">
-        <h2>Protocol Vanish</h2>
+        <h2>QR Generator</h2>
 
         <div id="input-group">
-            <input type="text" id="text-input" placeholder="ENTER PUBLIC DATA..." />
-            <button onclick="generateQR()">Generate Public QR</button>
+            <input type="text" id="text-input" placeholder="ENTER TEXT OR URL" />
+            <button onclick="generateQR()">Generate QR Code</button>
         </div>
 
         <div id="qrcode"></div>
@@ -200,7 +203,7 @@
                 text: text,
                 width: 200,
                 height: 200,
-                colorDark : "#2d3436", /* Dark Grey QR Code */
+                colorDark : "#2d3436", 
                 colorLight : "#ffffff",
                 correctLevel : QRCode.CorrectLevel.H
             });
