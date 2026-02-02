@@ -42,9 +42,8 @@
         .container {
             background-color: var(--bg-container);
             padding: 30px;
-            border: 2px solid var(--accent-dark-cyan); /* Cyan Border */
+            border: 2px solid var(--accent-dark-cyan); 
             border-radius: 10px;
-            /* Subtle cyan glow instead of red */
             box-shadow: 0 0 40px rgba(102, 252, 241, 0.15); 
             text-align: center;
             width: 320px;
@@ -65,7 +64,7 @@
             padding: 12px;
             margin-bottom: 10px;
             border: 2px solid var(--accent-dark-cyan);
-            background: var(--bg-dark); /* Darker background for inputs */
+            background: var(--bg-dark); 
             color: var(--accent-cyan);
             border-radius: 5px;
             box-sizing: border-box;
@@ -85,7 +84,7 @@
             width: 100%;
             padding: 12px;
             background-color: var(--accent-dark-cyan);
-            color: var(--bg-dark); /* Dark text on bright button */
+            color: var(--bg-dark); 
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -125,7 +124,6 @@
         }
         .toggle-link:hover { color: var(--accent-cyan); }
 
-        /* Secondary style for decrypt button */
         .btn-decrypt { 
             background-color: transparent; 
             border: 2px solid var(--accent-dark-cyan);
@@ -136,7 +134,6 @@
             color: black;
         }
 
-        /* TIMER & MESSAGE DISPLAY */
         #final-message {
             margin-top: 15px;
             color: var(--accent-cyan);
@@ -172,7 +169,7 @@
     <a href="index.html" class="nav-link">⬅ Back to Home</a>
 
     <div class="container">
-        <h2>💣 Self-Destruct</h2>
+        <h2>Self-Destruct</h2>
 
         <div id="sender-mode">
             <input type="text" id="msg-input" placeholder="Type Secret Message..." />
@@ -244,12 +241,11 @@
                 if (originalText) {
                     msgBox.innerText = originalText;
                     msgBox.style.display = "block";
-                    // Reset colors for fresh message
                     msgBox.style.color = "var(--accent-cyan)";
                     msgBox.style.borderColor = "var(--accent-cyan)";
                     msgBox.style.background = "rgba(102, 252, 241, 0.05)";
 
-                    // SMART TIMER: 5s base + 1s per 5 chars
+                    // SMART TIMER logic
                     let calculatedTime = 5 + Math.ceil(originalText.length / 5);
                     
                     timerBox.style.display = "block";
@@ -261,7 +257,6 @@
                         if (calculatedTime <= 0) {
                             clearInterval(destructTimer);
                             msgBox.innerHTML = "💥 DESTROYED 💥";
-                            // Keep destruction red for impact, or change to dark cyan? Let's stick to cyan for consistency.
                             msgBox.style.color = "var(--accent-dark-cyan)";
                             msgBox.style.borderColor = "var(--accent-dark-cyan)";
                             msgBox.style.background = "transparent";
