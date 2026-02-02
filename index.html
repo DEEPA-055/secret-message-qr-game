@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protocol Vanish: Home Base</title>
+    <title>Simple QR Code Generator</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* CHANGED: From Yellow to Dark Navy */
-            background-color: #1e272e; 
+            background-color: #fff700; /* ORIGINAL YELLOW */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,172 +18,118 @@
         }
 
         .container {
-            background-color: #ffffff; /* White card pops against dark background */
+            background-color: white;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Stronger shadow */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
             width: 100%;
             max-width: 400px;
-            border-top: 5px solid #00d2d3; /* Cool accent line on top */
         }
 
         h2 {
-            color: #2d3436;
+            color: #333;
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 22px;
         }
 
         input {
             width: 100%;
             padding: 12px;
             margin-bottom: 15px;
-            border: 2px solid #dfe6e9;
-            border-radius: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             box-sizing: border-box;
             font-size: 16px;
-            background-color: #f1f2f6;
-            transition: 0.3s;
-        }
-        
-        input:focus {
-            border-color: #00d2d3;
-            outline: none;
-            background-color: #fff;
         }
 
-        /* MAIN GENERATE BUTTON */
+        /* ORIGINAL TEAL BUTTON */
         button {
             width: 100%;
-            padding: 14px;
-            /* CHANGED: Neon Teal */
-            background-color: #00d2d3; 
-            color: #2d3436;
+            padding: 12px;
+            background-color: #008080; /* ORIGINAL TEAL */
+            color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: background 0.3s;
             font-weight: bold;
-            transition: transform 0.2s, background 0.3s;
-            text-transform: uppercase;
         }
 
         button:hover {
-            background-color: #01a3a4;
-            transform: translateY(-2px);
+            background-color: #006666; 
         }
 
         #qrcode {
             margin-top: 25px;
             display: flex;
             justify-content: center;
-            padding: 15px;
-            background: #f1f2f6;
-            border-radius: 8px;
+            padding: 10px;
         }
 
-        /* NAVIGATION SECTION */
+        /* SPY SECTION */
         .spy-section {
             margin-top: 30px;
-            border-top: 1px dashed #b2bec3;
+            border-top: 1px solid #ccc;
             padding-top: 20px;
         }
 
         .spy-text {
-            font-size: 13px;
-            color: #636e72;
+            font-size: 14px;
+            color: #555;
             margin-bottom: 15px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
         }
 
-        /* LINK BUTTONS */
+        /* SPY BUTTONS (Original Styles) */
         .spy-button {
             text-decoration: none;
-            padding: 12px 0;
-            width: 100%;
-            border-radius: 6px;
+            background-color: #2d3436; 
+            color: #00cec9;
+            padding: 15px 0; 
+            width: 100%;     
+            border-radius: 5px;
             font-weight: bold;
             font-family: monospace;
             display: inline-block;
-            transition: 0.3s;
-            margin-bottom: 10px;
-            font-size: 14px;
+            border: none;
+            margin-bottom: 10px; /* Space between buttons */
         }
-
-        /* Level 2 Button */
-        .btn-lvl2 {
-            background-color: #2d3436; 
-            color: #00d2d3;
-            border: 1px solid #2d3436;
-        }
-        .btn-lvl2:hover { background-color: #fff; color: #2d3436; }
-
-        /* Level 3 Button */
-        .btn-lvl3 {
-            background-color: #ff4757; 
-            color: white;
-            border: 1px solid #ff4757;
-        }
-        .btn-lvl3:hover { background-color: #fff; color: #ff4757; }
-
-        /* Level 4 Button */
-        .btn-lvl4 {
-            background-color: #000; 
-            color: #b2bec3; 
-            border: 1px solid #636e72;
-        }
-        .btn-lvl4:hover { background-color: #636e72; color: #fff; }
-
-        /* Journey Link */
-        .journey-link {
-            display: block;
-            margin-top: 15px;
-            font-size: 11px;
-            color: #b2bec3;
-            text-decoration: none;
-        }
-        .journey-link:hover { text-decoration: underline; }
-
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
     <div class="container">
-        <h2>Protocol Vanish</h2>
+        <h2>QR Generator</h2>
 
         <div id="input-group">
-            <input type="text" id="text-input" placeholder="ENTER PUBLIC DATA..." />
-            <button onclick="generateQR()">Generate Public QR</button>
+            <input type="text" id="text-input" placeholder="Enter text or URL" />
+            <button onclick="generateQR()">Generate QR Code</button>
         </div>
 
         <div id="qrcode"></div>
 
-        <button id="reset-btn" onclick="resetApp()" style="display: none; margin-top: 15px; background-color: #636e72; color: white;">
-            CLEAR DATA
+        <button id="reset-btn" onclick="resetApp()" style="display: none; margin-top: 15px; background-color: #555;">
+            Create New Code
         </button>
 
         <div class="spy-section">
-            <p class="spy-text">SELECT ENCRYPTION LEVEL:</p>
+            <p class="spy-text">Select Security Clearance:</p>
             
-            <a href="spy.html" class="spy-button btn-lvl2">
+            <a href="spy.html" class="spy-button" style="margin-bottom: 10px;">
                 🕵️ Level 2: Secret Message
             </a>
             
-            <a href="self_destruct.html" class="spy-button btn-lvl3">
+            <a href="self_destruct.html" class="spy-button" style="margin-bottom: 10px; background-color: #ff4757; color: white; border: 2px solid #ff4757;">
                 💣 Level 3: Self-Destruct
             </a>
 
-            <a href="top_secret.html" class="spy-button btn-lvl4">
+            <a href="top_secret.html" class="spy-button" style="background-color: #000; color: #b2bec3; border: 2px solid #636e72;">
                 ⚫ Level 4: Black Site
             </a>
-
-            <a href="journey.html" class="journey-link">📄 READ DEVELOPER LOGS</a>
         </div>
     </div>
+
 
     <script>
         const qrContainer = document.getElementById("qrcode");
@@ -193,14 +138,19 @@
 
         function generateQR() {
             let text = document.getElementById("text-input").value;
-            if (text.trim() === "") { alert("Please enter text"); return; }
+
+            if (text.trim() === "") {
+                alert("Please enter some text or a URL");
+                return;
+            }
 
             qrContainer.innerHTML = "";
+
             new QRCode(qrContainer, {
                 text: text,
                 width: 200,
                 height: 200,
-                colorDark : "#2d3436", /* Dark Grey QR Code */
+                colorDark : "#000000",
                 colorLight : "#ffffff",
                 correctLevel : QRCode.CorrectLevel.H
             });
