@@ -5,11 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Level 3: Self-Destruct Protocol</title>
     <style>
-        /* DANGER THEME STYLES (Red & Black) */
+        /* CYBER STEALTH DARK THEME */
+        :root {
+            --bg-dark: #0b0c10;
+            --bg-container: #1f2833;
+            --text-light: #c5c6c7;
+            --accent-cyan: #66fcf1;
+            --accent-dark-cyan: #45a29e;
+        }
+
         body {
             font-family: 'Courier New', Courier, monospace; 
-            background-color: #111; /* Pitch black */
-            color: #dfe6e9; 
+            background-color: var(--bg-dark); 
+            color: var(--text-light); 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,52 +30,62 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            color: #fab1a0;
+            color: var(--accent-dark-cyan);
             text-decoration: none;
             font-weight: bold;
             font-size: 14px;
-            opacity: 0.7;
+            opacity: 0.8;
             transition: 0.3s;
         }
-        .nav-link:hover { opacity: 1; text-decoration: underline; }
+        .nav-link:hover { opacity: 1; color: var(--accent-cyan); text-decoration: underline; }
 
         .container {
-            background-color: #000000;
+            background-color: var(--bg-container);
             padding: 30px;
-            border: 2px solid #ff4757; /* DANGER RED Border */
+            border: 2px solid var(--accent-dark-cyan); /* Cyan Border */
             border-radius: 10px;
-            box-shadow: 0 0 30px rgba(255, 71, 87, 0.3); 
+            /* Subtle cyan glow instead of red */
+            box-shadow: 0 0 40px rgba(102, 252, 241, 0.15); 
             text-align: center;
             width: 320px;
         }
 
         h2 { 
-            color: #ff4757; 
+            color: var(--accent-cyan); 
             text-transform: uppercase; 
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             margin-top: 0;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
+            border-bottom: 1px solid var(--accent-dark-cyan);
+            padding-bottom: 15px;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
         }
 
         input {
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
-            border: 1px solid #555;
-            background: #222;
-            color: #ff4757;
+            border: 2px solid var(--accent-dark-cyan);
+            background: var(--bg-dark); /* Darker background for inputs */
+            color: var(--accent-cyan);
             border-radius: 5px;
             box-sizing: border-box;
             font-family: 'Courier New', monospace;
             font-weight: bold;
+            transition: 0.3s;
         }
         
+        input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.2);
+        }
+        input::placeholder { color: var(--accent-dark-cyan); opacity: 0.6; }
+
         button {
             width: 100%;
             padding: 12px;
-            background-color: #ff4757;
-            color: white;
+            background-color: var(--accent-dark-cyan);
+            color: var(--bg-dark); /* Dark text on bright button */
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -76,11 +94,16 @@
             margin-bottom: 10px;
             text-transform: uppercase;
             transition: 0.3s;
+            letter-spacing: 1px;
         }
 
-        button:hover { background-color: #ff6b81; box-shadow: 0 0 15px #ff4757; }
+        button:hover { 
+            background-color: var(--accent-cyan); 
+            box-shadow: 0 0 20px var(--accent-cyan);
+            color: black;
+        }
 
-        .divider { border-top: 1px dashed #444; margin: 25px 0; }
+        .divider { border-top: 1px dashed var(--accent-dark-cyan); margin: 25px 0; opacity: 0.5; }
         
         #qrcode {
             margin-top: 20px;
@@ -93,34 +116,52 @@
         }
 
         .hidden { display: none; }
-        .toggle-link { font-size: 14px; color: #74b9ff; cursor: pointer; text-decoration: underline; }
+        .toggle-link { 
+            font-size: 14px; 
+            color: var(--accent-dark-cyan); 
+            cursor: pointer; 
+            text-decoration: underline;
+            transition: 0.3s;
+        }
+        .toggle-link:hover { color: var(--accent-cyan); }
 
-        .btn-decrypt { background-color: #0984e3; }
-        .btn-decrypt:hover { background-color: #74b9ff; box-shadow: 0 0 15px #0984e3; }
+        /* Secondary style for decrypt button */
+        .btn-decrypt { 
+            background-color: transparent; 
+            border: 2px solid var(--accent-dark-cyan);
+            color: var(--accent-cyan);
+        }
+        .btn-decrypt:hover { 
+            background-color: var(--accent-cyan); 
+            color: black;
+        }
 
         /* TIMER & MESSAGE DISPLAY */
         #final-message {
             margin-top: 15px;
-            color: #00cec9;
+            color: var(--accent-cyan);
             font-weight: bold;
             font-size: 18px;
             word-wrap: break-word;
-            padding: 10px;
-            border: 1px dashed #00cec9;
+            padding: 15px;
+            border: 2px dashed var(--accent-cyan);
+            background: rgba(102, 252, 241, 0.05);
             display: none;
+            border-radius: 5px;
         }
 
         #timer-display {
-            color: #ff4757;
+            color: var(--accent-cyan);
             font-weight: bold;
             margin-top: 10px;
             font-size: 16px;
             display: none;
             animation: blink 1s infinite;
+            text-shadow: 0 0 10px var(--accent-cyan);
         }
 
         @keyframes blink { 50% { opacity: 0.5; } }
-        .status { font-size: 12px; margin-top: 10px; height: 15px; color: #ccc;}
+        .status { font-size: 12px; margin-top: 10px; height: 15px; color: var(--text-light); opacity: 0.8;}
     </style>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -131,7 +172,7 @@
     <a href="index.html" class="nav-link">⬅ Back to Home</a>
 
     <div class="container">
-        <h2> Self-Destruct</h2>
+        <h2>💣 Self-Destruct</h2>
 
         <div id="sender-mode">
             <input type="text" id="msg-input" placeholder="Type Secret Message..." />
@@ -203,8 +244,10 @@
                 if (originalText) {
                     msgBox.innerText = originalText;
                     msgBox.style.display = "block";
-                    msgBox.style.color = "#00cec9";
-                    msgBox.style.borderColor = "#00cec9";
+                    // Reset colors for fresh message
+                    msgBox.style.color = "var(--accent-cyan)";
+                    msgBox.style.borderColor = "var(--accent-cyan)";
+                    msgBox.style.background = "rgba(102, 252, 241, 0.05)";
 
                     // SMART TIMER: 5s base + 1s per 5 chars
                     let calculatedTime = 5 + Math.ceil(originalText.length / 5);
@@ -217,9 +260,11 @@
                         countSpan.innerText = calculatedTime;
                         if (calculatedTime <= 0) {
                             clearInterval(destructTimer);
-                            msgBox.innerHTML = " DESTROYED !!";
-                            msgBox.style.color = "red";
-                            msgBox.style.borderColor = "red";
+                            msgBox.innerHTML = "💥 DESTROYED 💥";
+                            // Keep destruction red for impact, or change to dark cyan? Let's stick to cyan for consistency.
+                            msgBox.style.color = "var(--accent-dark-cyan)";
+                            msgBox.style.borderColor = "var(--accent-dark-cyan)";
+                            msgBox.style.background = "transparent";
                             timerBox.style.display = "none";
                         }
                     }, 1000); 
