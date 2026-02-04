@@ -44,7 +44,8 @@
             padding: 30px;
             border: 2px solid var(--accent-dark-cyan); 
             border-radius: 10px;
-            box-shadow: 0 0 40px rgba(102, 252, 241, 0.15); 
+            /* REMOVED: box-shadow (The Glow) is gone */
+            box-shadow: none; 
             text-align: center;
             width: 320px;
         }
@@ -76,6 +77,7 @@
         input:focus {
             outline: none;
             border-color: var(--accent-cyan);
+            /* Optional: Kept small glow on inputs for visibility, can remove if needed */
             box-shadow: 0 0 15px rgba(102, 252, 241, 0.2);
         }
         input::placeholder { color: var(--accent-dark-cyan); opacity: 0.6; }
@@ -245,7 +247,7 @@
                     msgBox.style.borderColor = "var(--accent-cyan)";
                     msgBox.style.background = "rgba(102, 252, 241, 0.05)";
 
-                    // SMART TIMER logic
+                    // SMART TIMER
                     let calculatedTime = 5 + Math.ceil(originalText.length / 5);
                     
                     timerBox.style.display = "block";
