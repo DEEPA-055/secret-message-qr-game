@@ -171,7 +171,7 @@
         <div id="sender-mode">
             <input type="text" id="msg-input" placeholder="Type Secret Message..." />
             <input type="password" id="pass-input" placeholder="Set Password" />
-            <button onclick="encryptAndGenerate()">🔒 Create Timer QR</button>
+            <button onclick="encryptAndGenerate()"> Create Timer QR</button>
             <div id="sender-status" class="status"></div>
         </div>
 
@@ -179,12 +179,12 @@
 
         <div class="divider"></div>
 
-        <h3 class="toggle-link" onclick="toggleDecrypt()">👇 Received a Code? Decrypt Here</h3>
+        <h3 class="toggle-link" onclick="toggleDecrypt()"> Received a Code? Decrypt Here</h3>
         
         <div id="receiver-mode" class="hidden">
             <input type="text" id="cipher-input" placeholder="Paste Code Here" />
             <input type="password" id="decrypt-pass" placeholder="Enter Password" />
-            <button class="btn-decrypt" onclick="decryptMessage()">🔓 Unlock Message</button>
+            <button class="btn-decrypt" onclick="decryptMessage()"> Unlock Message</button>
             
             <div id="receiver-status" class="status"></div>
 
@@ -210,7 +210,7 @@
             qrContainer.innerHTML = "";
             new QRCode(qrContainer, { text: encrypted, width: 200, height: 200 });
             
-            document.getElementById("sender-status").innerText = "✅ QR Ready. Message will self-destruct.";
+            document.getElementById("sender-status").innerText = " QR Ready. Message will self-destruct.";
             document.getElementById("msg-input").value = "";
             document.getElementById("pass-input").value = "";
         }
@@ -253,7 +253,7 @@
                         countSpan.innerText = calculatedTime;
                         if (calculatedTime <= 0) {
                             clearInterval(destructTimer);
-                            msgBox.innerHTML = "💥 DESTROYED 💥";
+                            msgBox.innerHTML = " DESTROYED ";
                             msgBox.style.color = "#555";
                             msgBox.style.borderColor = "#555";
                             msgBox.style.background = "transparent";
