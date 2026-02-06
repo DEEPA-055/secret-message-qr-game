@@ -3,21 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Level 3: Self-Destruct Protocol</title>
+    <title>Level 2: Secret Message</title>
     <style>
-        /* CYBER STEALTH DARK THEME */
-        :root {
-            --bg-dark: #0b0c10;
-            --bg-container: #1f2833;
-            --text-light: #c5c6c7;
-            --accent-cyan: #66fcf1;
-            --accent-dark-cyan: #45a29e;
-        }
-
+        /* SPY THEME: Dark Grey & Teal (Flat Style) */
         body {
             font-family: 'Courier New', Courier, monospace; 
-            background-color: var(--bg-dark); 
-            color: var(--text-light); 
+            background-color: #2d3436; /* Dark Grey Background */
+            color: #dfe6e9; /* Light Grey Text */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,135 +22,106 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            color: var(--accent-dark-cyan);
+            color: #00cec9;
             text-decoration: none;
             font-weight: bold;
             font-size: 14px;
-            opacity: 0.8;
-            transition: 0.3s;
         }
-        .nav-link:hover { opacity: 1; color: var(--accent-cyan); text-decoration: underline; }
+        .nav-link:hover { text-decoration: underline; }
 
         .container {
-            background-color: var(--bg-container);
+            background-color: #000000;
             padding: 30px;
-            border: 2px solid var(--accent-dark-cyan); 
-            border-radius: 10px;
-            box-shadow: 0 0 40px rgba(102, 252, 241, 0.15); 
+            /* FLAT BORDER - NO GLOW */
+            border: 2px solid #00cec9; 
+            border-radius: 8px;
+            box-shadow: none; 
             text-align: center;
             width: 320px;
         }
 
         h2 { 
-            color: var(--accent-cyan); 
+            color: #00cec9; 
             text-transform: uppercase; 
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             margin-top: 0;
-            border-bottom: 1px solid var(--accent-dark-cyan);
-            padding-bottom: 15px;
-            text-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
         }
 
+        /* Input Fields */
         input {
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
-            border: 2px solid var(--accent-dark-cyan);
-            background: var(--bg-dark); 
-            color: var(--accent-cyan);
-            border-radius: 5px;
+            border: 2px solid #00cec9;
+            background: #111;
+            color: #00cec9;
+            border-radius: 4px;
             box-sizing: border-box;
             font-family: 'Courier New', monospace;
             font-weight: bold;
-            transition: 0.3s;
         }
         
-        input:focus {
-            outline: none;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(102, 252, 241, 0.2);
-        }
-        input::placeholder { color: var(--accent-dark-cyan); opacity: 0.6; }
+        input:focus { outline: none; background: #222; }
+        input::placeholder { color: #636e72; }
 
+        /* Buttons */
         button {
             width: 100%;
             padding: 12px;
-            background-color: var(--accent-dark-cyan);
-            color: var(--bg-dark); 
+            background-color: #00cec9;
+            color: black;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
             font-size: 16px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            transition: 0.3s;
-            letter-spacing: 1px;
+            transition: 0.2s;
         }
 
         button:hover { 
-            background-color: var(--accent-cyan); 
-            box-shadow: 0 0 20px var(--accent-cyan);
-            color: black;
+            background-color: #81ecec; 
+            transform: translateY(-2px);
         }
 
-        .divider { border-top: 1px dashed var(--accent-dark-cyan); margin: 25px 0; opacity: 0.5; }
+        /* Divider Line */
+        .divider { 
+            border-top: 1px dashed #636e72; 
+            margin: 25px 0; 
+        }
         
+        /* QR Code Box */
         #qrcode {
             margin-top: 20px;
             display: flex;
             justify-content: center;
             background: white; 
-            padding: 10px;
-            border-radius: 5px;
-            min-height: 200px;
+            padding: 15px;
+            border-radius: 4px;
+            min-height: 200px; 
         }
 
         .hidden { display: none; }
-        .toggle-link { 
-            font-size: 14px; 
-            color: var(--accent-dark-cyan); 
-            cursor: pointer; 
-            text-decoration: underline;
-            transition: 0.3s;
-        }
-        .toggle-link:hover { color: var(--accent-cyan); }
 
-        .btn-decrypt { 
-            background-color: transparent; 
-            border: 2px solid var(--accent-dark-cyan);
-            color: var(--accent-cyan);
+        /* Decrypt Button Style */
+        .btn-decrypt {
+            background-color: transparent;
+            border: 2px solid #00cec9;
+            color: #00cec9;
         }
-        .btn-decrypt:hover { 
-            background-color: var(--accent-cyan); 
-            color: black;
-        }
+        .btn-decrypt:hover { background-color: #00cec9; color: black; }
 
         #final-message {
             margin-top: 15px;
-            color: var(--accent-cyan);
+            color: #00cec9;
             font-weight: bold;
             font-size: 18px;
             word-wrap: break-word;
-            padding: 15px;
-            border: 2px dashed var(--accent-cyan);
-            background: rgba(102, 252, 241, 0.05);
+            border: 1px dashed #00cec9;
+            padding: 10px;
             display: none;
-            border-radius: 5px;
         }
-
-        #timer-display {
-            color: var(--accent-cyan);
-            font-weight: bold;
-            margin-top: 10px;
-            font-size: 16px;
-            display: none;
-            animation: blink 1s infinite;
-            text-shadow: 0 0 10px var(--accent-cyan);
-        }
-
-        @keyframes blink { 50% { opacity: 0.5; } }
-        .status { font-size: 12px; margin-top: 10px; height: 15px; color: var(--text-light); opacity: 0.8;}
     </style>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -166,32 +129,30 @@
 </head>
 <body>
 
-    <a href="index.html" class="nav-link">⬅ Back to Home</a>
+    <a href="index.html" class="nav-link">⬅ Back to Generator</a>
 
     <div class="container">
-        <h2>Self-Destruct</h2>
+        <h2>🔒 Level 2: Secret</h2>
 
         <div id="sender-mode">
             <input type="text" id="msg-input" placeholder="Type Secret Message..." />
-            <input type="password" id="pass-input" placeholder="Set Password" />
-            <button onclick="encryptAndGenerate()">🔒 Create Timer QR</button>
-            <div id="sender-status" class="status"></div>
+            <input type="password" id="pass-input" placeholder="Set a Password (Key)" />
+            <button onclick="encryptAndGenerate()">🔒 Encrypt & Create QR</button>
         </div>
 
         <div id="qrcode"></div>
+        <p id="status-msg" style="color: #b2bec3; font-size: 12px; margin-top: 10px;"></p>
 
         <div class="divider"></div>
 
-        <h3 class="toggle-link" onclick="toggleDecrypt()">👇 Received a Code? Decrypt Here</h3>
+        <h3 style="font-size: 14px; color: #00cec9; cursor: pointer; text-decoration: underline;" onclick="toggleDecrypt()">
+            👇 Have a code to Decrypt?
+        </h3>
         
         <div id="receiver-mode" class="hidden">
-            <input type="text" id="cipher-input" placeholder="Paste Code Here" />
-            <input type="password" id="decrypt-pass" placeholder="Enter Password" />
+            <input type="text" id="cipher-input" placeholder="Paste Scanned Text Here" />
+            <input type="password" id="decrypt-pass" placeholder="Enter Password to Unlock" />
             <button class="btn-decrypt" onclick="decryptMessage()">🔓 Unlock Message</button>
-            
-            <div id="receiver-status" class="status"></div>
-
-            <div id="timer-display">⚠️ DESTROYING IN: <span id="countdown">0</span>s</div>
             <div id="final-message"></div>
         </div>
 
@@ -199,21 +160,29 @@
 
     <script>
         const qrContainer = document.getElementById("qrcode");
-        let destructTimer;
 
         function encryptAndGenerate() {
             let message = document.getElementById("msg-input").value;
             let password = document.getElementById("pass-input").value;
-            
+
             if (!message || !password) {
-                alert("Please enter message and password!"); return;
+                alert("⚠️ MISSION FAILED: You need both a Message AND a Password!");
+                return;
             }
 
             let encrypted = CryptoJS.AES.encrypt(message, password).toString();
+
             qrContainer.innerHTML = "";
-            new QRCode(qrContainer, { text: encrypted, width: 200, height: 200 });
-            
-            document.getElementById("sender-status").innerText = "✅ QR Ready. Message will self-destruct.";
+            new QRCode(qrContainer, {
+                text: encrypted,
+                width: 200,
+                height: 200,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            document.getElementById("status-msg").innerText = "✅ QR generated! Contains encrypted data only.";
             document.getElementById("msg-input").value = "";
             document.getElementById("pass-input").value = "";
         }
@@ -226,46 +195,28 @@
         function decryptMessage() {
             let cipherText = document.getElementById("cipher-input").value;
             let password = document.getElementById("decrypt-pass").value;
-            let msgBox = document.getElementById("final-message");
-            let timerBox = document.getElementById("timer-display");
-            let countSpan = document.getElementById("countdown");
 
-            clearInterval(destructTimer);
-            timerBox.style.display = "none";
-            msgBox.style.display = "none";
+            if (!cipherText || !password) {
+                alert("Please enter the Code Text and the Password.");
+                return;
+            }
 
             try {
                 let bytes = CryptoJS.AES.decrypt(cipherText, password);
                 let originalText = bytes.toString(CryptoJS.enc.Utf8);
 
                 if (originalText) {
+                    let msgBox = document.getElementById("final-message");
                     msgBox.innerText = originalText;
                     msgBox.style.display = "block";
-                    msgBox.style.color = "var(--accent-cyan)";
-                    msgBox.style.borderColor = "var(--accent-cyan)";
-                    msgBox.style.background = "rgba(102, 252, 241, 0.05)";
-
-                    // SMART TIMER logic
-                    let calculatedTime = 5 + Math.ceil(originalText.length / 5);
-                    
-                    timerBox.style.display = "block";
-                    countSpan.innerText = calculatedTime;
-
-                    destructTimer = setInterval(function() {
-                        calculatedTime--;
-                        countSpan.innerText = calculatedTime;
-                        if (calculatedTime <= 0) {
-                            clearInterval(destructTimer);
-                            msgBox.innerHTML = "💥 DESTROYED 💥";
-                            msgBox.style.color = "var(--accent-dark-cyan)";
-                            msgBox.style.borderColor = "var(--accent-dark-cyan)";
-                            msgBox.style.background = "transparent";
-                            timerBox.style.display = "none";
-                        }
-                    }, 1000); 
-                } else { alert("Wrong Password!"); }
-            } catch (e) { alert("Invalid Code"); }
+                } else {
+                    alert("❌ ACCESS DENIED: Wrong Password!");
+                }
+            } catch (e) {
+                alert("❌ ERROR: Invalid Code Format.");
+            }
         }
     </script>
+
 </body>
 </html>
