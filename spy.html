@@ -132,12 +132,12 @@
     <a href="index.html" class="nav-link">⬅ Back to Generator</a>
 
     <div class="container">
-        <h2>🔒 Level 2: Secret</h2>
+        <h2> Level 2: Secret</h2>
 
         <div id="sender-mode">
             <input type="text" id="msg-input" placeholder="Type Secret Message..." />
             <input type="password" id="pass-input" placeholder="Set a Password (Key)" />
-            <button onclick="encryptAndGenerate()">🔒 Encrypt & Create QR</button>
+            <button onclick="encryptAndGenerate()"> Encrypt & Create QR</button>
         </div>
 
         <div id="qrcode"></div>
@@ -146,13 +146,13 @@
         <div class="divider"></div>
 
         <h3 style="font-size: 14px; color: #00cec9; cursor: pointer; text-decoration: underline;" onclick="toggleDecrypt()">
-            👇 Have a code to Decrypt?
+             Have a code to Decrypt?
         </h3>
         
         <div id="receiver-mode" class="hidden">
             <input type="text" id="cipher-input" placeholder="Paste Scanned Text Here" />
             <input type="password" id="decrypt-pass" placeholder="Enter Password to Unlock" />
-            <button class="btn-decrypt" onclick="decryptMessage()">🔓 Unlock Message</button>
+            <button class="btn-decrypt" onclick="decryptMessage()"> Unlock Message</button>
             <div id="final-message"></div>
         </div>
 
@@ -182,7 +182,7 @@
                 correctLevel : QRCode.CorrectLevel.H
             });
 
-            document.getElementById("status-msg").innerText = "✅ QR generated! Contains encrypted data only.";
+            document.getElementById("status-msg").innerText = " QR generated! Contains encrypted data only.";
             document.getElementById("msg-input").value = "";
             document.getElementById("pass-input").value = "";
         }
