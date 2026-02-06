@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Level 3: Self-Destruct Protocol</title>
     <style>
-        /* CYBER STEALTH DARK THEME */
+        /* DANGER THEME: Red & Black (Flat - No Glow) */
         :root {
-            --bg-dark: #0b0c10;
-            --bg-container: #1f2833;
-            --text-light: #c5c6c7;
-            --accent-cyan: #66fcf1;
-            --accent-dark-cyan: #45a29e;
+            --bg-black: #000000;
+            --bg-panel: #0a0a0a;
+            --danger-red: #ff3333; /* Bright Red */
+            --dark-red: #990000;   /* Dark Red */
+            --text-grey: #b2bec3;
         }
 
         body {
             font-family: 'Courier New', Courier, monospace; 
-            background-color: var(--bg-dark); 
-            color: var(--text-light); 
+            background-color: var(--bg-black); 
+            color: var(--text-grey); 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,44 +30,43 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            color: var(--accent-dark-cyan);
+            color: var(--dark-red);
             text-decoration: none;
             font-weight: bold;
             font-size: 14px;
-            opacity: 0.8;
             transition: 0.3s;
         }
-        .nav-link:hover { opacity: 1; color: var(--accent-cyan); text-decoration: underline; }
+        .nav-link:hover { color: var(--danger-red); text-decoration: underline; }
 
         .container {
-            background-color: var(--bg-container);
+            background-color: var(--bg-panel);
             padding: 30px;
-            border: 2px solid var(--accent-dark-cyan); 
-            border-radius: 10px;
-            /* GLOW REMOVED for Flat Style */
+            /* RED BORDER - NO GLOW */
+            border: 2px solid var(--danger-red); 
+            border-radius: 6px;
             box-shadow: none; 
             text-align: center;
             width: 320px;
         }
 
         h2 { 
-            color: var(--accent-cyan); 
+            color: var(--danger-red); 
             text-transform: uppercase; 
             letter-spacing: 3px;
             margin-top: 0;
-            border-bottom: 1px solid var(--accent-dark-cyan);
+            border-bottom: 1px solid var(--dark-red);
             padding-bottom: 15px;
-            text-shadow: 0 0 10px rgba(102, 252, 241, 0.3);
+            text-shadow: none;
         }
 
         input {
             width: 100%;
             padding: 12px;
             margin-bottom: 10px;
-            border: 2px solid var(--accent-dark-cyan);
-            background: var(--bg-dark); 
-            color: var(--accent-cyan);
-            border-radius: 5px;
+            border: 2px solid var(--dark-red);
+            background: var(--bg-black); 
+            color: var(--danger-red);
+            border-radius: 4px;
             box-sizing: border-box;
             font-family: 'Courier New', monospace;
             font-weight: bold;
@@ -76,17 +75,17 @@
         
         input:focus {
             outline: none;
-            border-color: var(--accent-cyan);
+            border-color: var(--danger-red);
         }
-        input::placeholder { color: var(--accent-dark-cyan); opacity: 0.6; }
+        input::placeholder { color: var(--dark-red); opacity: 0.6; }
 
         button {
             width: 100%;
             padding: 12px;
-            background-color: var(--accent-dark-cyan);
-            color: var(--bg-dark); 
+            background-color: var(--danger-red);
+            color: black; 
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
             font-size: 16px;
@@ -97,12 +96,11 @@
         }
 
         button:hover { 
-            background-color: var(--accent-cyan); 
-            box-shadow: 0 0 20px var(--accent-cyan);
-            color: black;
+            background-color: #cc0000; 
+            color: white;
         }
 
-        .divider { border-top: 1px dashed var(--accent-dark-cyan); margin: 25px 0; opacity: 0.5; }
+        .divider { border-top: 1px dashed var(--dark-red); margin: 25px 0; opacity: 0.5; }
         
         #qrcode {
             margin-top: 20px;
@@ -110,55 +108,54 @@
             justify-content: center;
             background: white; 
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 4px;
             min-height: 200px;
         }
 
         .hidden { display: none; }
         .toggle-link { 
             font-size: 14px; 
-            color: var(--accent-dark-cyan); 
+            color: var(--dark-red); 
             cursor: pointer; 
             text-decoration: underline;
             transition: 0.3s;
         }
-        .toggle-link:hover { color: var(--accent-cyan); }
+        .toggle-link:hover { color: var(--danger-red); }
 
         .btn-decrypt { 
             background-color: transparent; 
-            border: 2px solid var(--accent-dark-cyan);
-            color: var(--accent-cyan);
+            border: 2px solid var(--dark-red);
+            color: var(--danger-red);
         }
         .btn-decrypt:hover { 
-            background-color: var(--accent-cyan); 
+            background-color: var(--danger-red); 
             color: black;
         }
 
         #final-message {
             margin-top: 15px;
-            color: var(--accent-cyan);
+            color: var(--danger-red);
             font-weight: bold;
             font-size: 18px;
             word-wrap: break-word;
             padding: 15px;
-            border: 2px dashed var(--accent-cyan);
-            background: rgba(102, 252, 241, 0.05);
+            border: 2px dashed var(--danger-red);
+            background: rgba(255, 51, 51, 0.05);
             display: none;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
         #timer-display {
-            color: var(--accent-cyan);
+            color: var(--danger-red);
             font-weight: bold;
             margin-top: 10px;
             font-size: 16px;
             display: none;
             animation: blink 1s infinite;
-            text-shadow: 0 0 10px var(--accent-cyan);
         }
 
         @keyframes blink { 50% { opacity: 0.5; } }
-        .status { font-size: 12px; margin-top: 10px; height: 15px; color: var(--text-light); opacity: 0.8;}
+        .status { font-size: 12px; margin-top: 10px; height: 15px; color: var(--text-grey); opacity: 0.8;}
     </style>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -241,9 +238,9 @@
                 if (originalText) {
                     msgBox.innerText = originalText;
                     msgBox.style.display = "block";
-                    msgBox.style.color = "var(--accent-cyan)";
-                    msgBox.style.borderColor = "var(--accent-cyan)";
-                    msgBox.style.background = "rgba(102, 252, 241, 0.05)";
+                    msgBox.style.color = "var(--danger-red)";
+                    msgBox.style.borderColor = "var(--danger-red)";
+                    msgBox.style.background = "rgba(255, 51, 51, 0.05)";
 
                     // SMART TIMER logic
                     let calculatedTime = 5 + Math.ceil(originalText.length / 5);
@@ -257,8 +254,8 @@
                         if (calculatedTime <= 0) {
                             clearInterval(destructTimer);
                             msgBox.innerHTML = "💥 DESTROYED 💥";
-                            msgBox.style.color = "var(--accent-dark-cyan)";
-                            msgBox.style.borderColor = "var(--accent-dark-cyan)";
+                            msgBox.style.color = "#555";
+                            msgBox.style.borderColor = "#555";
                             msgBox.style.background = "transparent";
                             timerBox.style.display = "none";
                         }
